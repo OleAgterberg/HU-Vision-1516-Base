@@ -16,15 +16,11 @@
 class IntensityImageStudent : public IntensityImage {
 public:
 	/*
-	 *@author	Ole Agterberg, Ferdi Stoeltie
-	 *@date		13-04-2016
 	 *@brief	
 	 */
 	IntensityImageStudent();
 
 	/*
-	*@author	Ole Agterberg, Ferdi Stoeltie
-	*@date		13-04-2016
 	*@brief
 	*/
 	IntensityImageStudent(const IntensityImageStudent &other);
