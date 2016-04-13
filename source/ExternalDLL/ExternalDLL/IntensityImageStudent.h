@@ -1,4 +1,11 @@
 /*
+ * @author Alexander Hustinx
+ * @author Rolf Smit
+ * @author NeoTech Software
+ * @author Ole Agterberg
+ * @author Ferdi Stoeltie
+ * @date 13-04-2016
+ * @brief 
 * Copyright (c) 2015 DottedEye Designs, Alexander Hustinx, NeoTech Software, Rolf Smit - All Rights Reserved
 * Unauthorized copying of this file, via any medium is strictly prohibited
 * Proprietary and confidential
@@ -8,7 +15,14 @@
 #include "IntensityImage.h"
 class IntensityImageStudent : public IntensityImage {
 public:
+	/*
+	 *@brief	
+	 */
 	IntensityImageStudent();
+
+	/*
+	*@brief
+	*/
 	IntensityImageStudent(const IntensityImageStudent &other);
 	IntensityImageStudent(const int width, const int height);
 	~IntensityImageStudent();
