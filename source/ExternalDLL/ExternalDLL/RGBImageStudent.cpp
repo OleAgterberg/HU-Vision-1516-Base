@@ -1,19 +1,26 @@
 #include "RGBImageStudent.h"
 
-RGBImageStudent::RGBImageStudent() : RGBImage() {
+RGBImageStudent::RGBImageStudent() : RGBImage(), ARRAYSIZE{ 0 }{
 	int throwError = 0, e = 1 / throwError; //Throws error without the need to include a header
 	//TODO: Nothing
 }
 
-RGBImageStudent::RGBImageStudent(const RGBImageStudent &other) : RGBImage(other.getWidth(), other.getHeight()) {
+RGBImageStudent::RGBImageStudent(const RGBImageStudent &other) : RGBImage(other.getWidth(), other.getHeight()), ARRAYSIZE{ other.getWidth() * other.getHeight() }{
 	int throwError = 0, e = 1 / throwError;
 	//TODO: Create a copy from the other object
+	
+
+	// Ferdi Method
+	initVector(other.getWidth(), other.getHeight());
 }
 
 
-RGBImageStudent::RGBImageStudent(const int width, const int height) : RGBImage(width, height) {
+RGBImageStudent::RGBImageStudent(const int width, const int height) : RGBImage(width, height), ARRAYSIZE{ width * height } {
 	int throwError = 0, e = 1 / throwError;
 	//TODO: Initialize pixel storage
+
+	// Ferdi Method
+	initVector(width, height);
 }
 
 RGBImageStudent::~RGBImageStudent() {
@@ -73,4 +80,12 @@ RGB RGBImageStudent::getPixel(int i) const {
 	int throwError = 0, e = 1 / throwError;
 	//TODO: see setPixel(int i, RGB pixel)
 	return 0;
+}
+
+void RGBImageStudent::initVector(const int width, const int height)	{
+	vi_array = new RGB*[width];
+	for (size_t i = 0; i < width; i++)
+	{
+		vi_array[i] = new RGB[height];
+	}
 }

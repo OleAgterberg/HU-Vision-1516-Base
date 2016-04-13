@@ -9,6 +9,8 @@
 #include <vector>
 #include <map>
 #include <array>
+#include <stdint.h>
+#define rgb (uint8_t)3 // constexpr not supported by vc2013 current build (needs newer build -> November++ build)
 class RGBImageStudent : public RGBImage {
 public:
 
@@ -16,8 +18,15 @@ public:
 	RGBImageStudent(const RGBImageStudent &other);
 	RGBImageStudent(const int width, const int height);
 	~RGBImageStudent();
-
+	/*
+	 *@brief Cropping of image, if new width and height are greater than current, 
+	 *			resize image and fill extra pixels with black (or white).
+	 *			If new width or height is smaller, keep old width and/or height.
+	 *@*/
 	void set(const int width, const int height);
+	/*
+	 *@brief Copy contents?
+	 *@*/
 	void set(const RGBImageStudent &other);
 
 	void setPixel(int x, int y, RGB pixel);
@@ -27,11 +36,14 @@ public:
 	RGB getPixel(int i) const;
 
 private:
+	void initVector(const int width, const int height);
     std::vector<std::vector<RGB>> vector_image;
     std::map<int, RGB> map_image;
-    /*
+	const int ARRAYSIZE;
+	// make multi dimensional array, 1 holds x and y, the other holds pixel rgb
+	RGB **vi_array;
+	std::vector < std::array<uint8_t, rgb> > v_image;
     int pixels;
-    std::array<std::array<int, 3>, pixels> array_image;
-    */
+    
 
 };
