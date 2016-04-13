@@ -30,6 +30,10 @@ public:
 	void set(const RGBImageStudent &other);
 
 	void setPixel(int x, int y, RGB pixel);
+
+	/*
+	 * @brief set pixel i, if i > width, count on next row.
+	 **/
 	void setPixel(int i, RGB pixel);
 
 	RGB getPixel(int x, int y) const;
@@ -37,6 +41,8 @@ public:
 
 private:
 	void initVector(const int width, const int height);
+	void copy_vimage(const RGBImageStudent &other);
+	void emptyArray();
     std::vector<std::vector<RGB>> vector_image;
     std::map<int, RGB> map_image;
 	const int ARRAYSIZE;
@@ -44,6 +50,5 @@ private:
 	RGB **vi_array;
 	std::vector < std::array<uint8_t, rgb> > v_image;
     int pixels;
-    
 
 };

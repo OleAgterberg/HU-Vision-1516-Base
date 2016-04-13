@@ -6,6 +6,7 @@
 
 #pragma once
 class Image {
+	friend class RGBImageStudent;
 private:
 	int width;
 	int height;
