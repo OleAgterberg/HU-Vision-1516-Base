@@ -1,3 +1,4 @@
+
 /*
 * Copyright (c) 2015 DottedEye Designs, Alexander Hustinx, NeoTech Software, Rolf Smit - All Rights Reserved
 * Unauthorized copying of this file, via any medium is strictly prohibited
@@ -50,8 +51,6 @@ int main(int argc, char * argv[]) {
 	system("pause");
 	return 1;
 }
-
-
 
 bool executeSteps(DLLExecution * executor) {
 
