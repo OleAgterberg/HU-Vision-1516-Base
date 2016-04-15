@@ -27,8 +27,12 @@ public:
 	RGB getPixel(int i) const;
 
 private:
-    std::vector<std::vector<RGB>> vector_image;
-    std::map<int, RGB> map_image;
+    std::map<int, std::map<int, RGB>> image;
+    std::pair<const int, std::map<int, RGB, std::less<int>, std::allocator<std::pair<const int, RGB>>>>* image_pointer;
+
+
+
+    //std::vector<std::vector<RGB>> image;
     /*
     int pixels;
     std::array<std::array<int, 3>, pixels> array_image;
