@@ -40,6 +40,7 @@ public:
 	RGB getPixel(int i) const;
 
 private:
+    setImage(const RGBImageStudent &other);
     // 
     RGB **rgb_image;
 

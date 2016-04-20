@@ -6,7 +6,7 @@ RGBImageStudent::RGBImageStudent() : RGBImage() {
 	//TODO: Nothing
 }
 
-RGBImageStudent::RGBImageStudent(const RGBImageStudent &other) : RGBImage(other.getWidth(), other.getHeight()), ARRAYSIZE{ other.getWidth() * other.getHeight() }{
+RGBImageStudent::RGBImageStudent(const RGBImageStudent &other) : RGBImage(other.getWidth(), other.getHeight()) {
     
 	//TODO: Create a copy from the other object
 	// Copy rgbimage contents
@@ -14,7 +14,7 @@ RGBImageStudent::RGBImageStudent(const RGBImageStudent &other) : RGBImage(other.
 	//initVector(other.getWidth(), other.getHeight());
 }
 
-RGBImageStudent::RGBImageStudent(const int width, const int height) : RGBImage(width, height), ARRAYSIZE{ width * height } {
+RGBImageStudent::RGBImageStudent(const int width, const int height) {
     
 	//TODO: Initialize pixel storage
 
@@ -72,4 +72,8 @@ RGB RGBImageStudent::getPixel(int x, int y) const {
 
 RGB RGBImageStudent::getPixel(int i) const {
 	//TODO: see setPixel(int i, RGB pixel)
+}
+
+void RGBImageStudent::setImage(const RGBImageStudent &other){
+
 }
