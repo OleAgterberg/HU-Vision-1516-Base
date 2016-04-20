@@ -42,14 +42,21 @@ void RGBImageStudent::set(const int width, const int height) {
 
 	//TODO: resize or create a new pixel storage (Don't forget to delete the old storage)
 	RGBImage::set(width, height);
-	int throwError = 0, e = 1 / throwError;
+	//int throwError = 0, e = 1 / throwError;
 	
 	RGB **vi_array_t;
-	vi_array_t = new RGB*[width];
-	for (size_t i = 0; i < width; i++)
+	vi_array_t = new RGB*[height];
+	for (size_t i = 0; i < height; i++)
 	{
-		vi_array_t[i] = new RGB[height]{ RGB(0, 0, 0) };
+		vi_array_t[i] = new RGB[width]{ RGB(0, 0, 0) };
 	}
+
+	vi_array = new RGB*[height];
+	for (size_t i = 0; i < height; i++)
+	{
+		vi_array[i] = new RGB[width]{ RGB(0, 0, 0) };
+	}
+
 	memcpy(vi_array_t, vi_array, (width * height * sizeof(RGB))); // should be done for each row!
 }
 
@@ -141,10 +148,10 @@ void RGBImageStudent::copy_vimage(const RGBImageStudent &other)	{
 	}
 }
 void RGBImageStudent::initVector(const int width, const int height)	{
-	vi_array = new RGB*[width];
-	for (size_t i = 0; i < width; i++)
+	vi_array = new RGB*[height];
+	for (size_t i = 0; i < height; i++)
 	{
-		vi_array[i] = new RGB[height]{ RGB(0, 0, 0) };
+		vi_array[i] = new RGB[width]{ RGB(0, 0, 0) };
 	}
 }
 void RGBImageStudent::emptyArray()	{
