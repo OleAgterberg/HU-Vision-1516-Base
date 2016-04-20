@@ -1,8 +1,7 @@
 #include "RGBImageStudent.h"
 
-RGBImageStudent::RGBImageStudent() : RGBImage() {
-	//int throwError = 0, e = 1 / throwError; //Throws error without the need to include a header
-	//TODO: Nothing
+RGBImageStudent::RGBImageStudent() : RGBImage(0, 0) {
+	// set rgb_image nullptr, safety check
     rgb_image = nullptr;
 }
 
@@ -40,7 +39,7 @@ void RGBImageStudent::set(const int width, const int height) {
 	this->height	= height;
 	init_rgb_image();
 	cpy_rgb_array(rgb_image, t_rgb_array, old_width, old_height);
-	delete_rgb_array(t_rgb_array);
+	delete_rgb_array(t_rgb_array, old_width, old_height);
 }
 
 void RGBImageStudent::set(const RGBImageStudent &other) {
@@ -65,27 +64,6 @@ void RGBImageStudent::setPixel(int x, int y, RGB pixel) {
 void RGBImageStudent::setPixel(int i, RGB pixel) {
     int x = i % width, y = i / width;
     rgb_image[y][x] = pixel;
-	/*
-	* TODO: set pixel i in "Row-Major Order"
-	*
-	*
-	* Original 2d image (values):
-	* 9 1 2
-	* 4 3 5
-	* 8 7 8
-	*
-	* 1d representation (i, value):
-	* i		value
-	* 0		9
-	* 1		1
-	* 2		2
-	* 3		4
-	* 4		3
-	* 5		5
-	* 6		8
-	* 7		7
-	* 8		8
-	*/
 }
 
 
@@ -95,17 +73,18 @@ RGB RGBImageStudent::getPixel(int x, int y) const {
 }
 
 RGB RGBImageStudent::getPixel(int i) const {
+	// i % width = row. i / width = column
     int x = i % width, y = i / width;
     return rgb_image[y][x];
 }
-void RGBImageStudent::delete_rgb_array(RGB** array1) {
-    if (array1 != nullptr){
-        for (size_t i = 0; i < height; i++)
+void RGBImageStudent::delete_rgb_array(RGB** array1, int old_width, int old_height) {
+   // if (array1 != nullptr){
+        for (size_t i = 0; i < old_height; i++)
         {
             delete[] array1[i];
         }
         delete[] array1;
-    }
+    //}
 }
 
 void RGBImageStudent::init_rgb_image()	{
