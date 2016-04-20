@@ -28,6 +28,7 @@ RGBImageStudent::RGBImageStudent(const int width, const int height) : RGBImage(w
 
 RGBImageStudent::~RGBImageStudent() {
     delete_rgb_array(rgb_image);
+    rgb_image = nullptr;
 	//TODO: delete allocated objects
 }
 
@@ -57,7 +58,7 @@ void RGBImageStudent::set(const RGBImageStudent &other) {
             setPixel(x, y, other.getPixel(x, y));
         }
     }
-    delete_rgb_array(rgb_image);
+    delete_rgb_array(t_intensity_array);
 }
 
 void RGBImageStudent::setPixel(int x, int y, RGB pixel) {
@@ -103,19 +104,21 @@ RGB RGBImageStudent::getPixel(int i) const {
     int x = i % width, y = i / width;
     return rgb_image[x][y];
 }
-void RGBImageStudent::delete_rgb_array(RGB** array1)	{
-	for (size_t i = 0; i < width; i++)
-	{
-		delete[] array1[i];
-	}
-	delete[] array1;
+void RGBImageStudent::delete_rgb_array(RGB** array1) {
+    if (array1 != nullptr){
+        for (size_t i = 0; i < width; i++)
+        {
+            delete[] array1[i];
+        }
+        delete[] array1;
+    }
 }
 
 void RGBImageStudent::init_rgb_image()	{
-	*rgb_image = new RGB[height];
+    rgb_image = new RGB*[height];
 	for (size_t i = 0; i < height; i++)
 	{
-		**rgb_image = *new RGB[width];
+		rgb_image[i] = new RGB[width];
 	}
 
 }
