@@ -39,8 +39,11 @@ public:
 	RGB getPixel(int x, int y) const;
 	RGB getPixel(int i) const;
 
+
+
 private:
-    setImage(const RGBImageStudent &other);
+    void setImage(const RGBImageStudent &other);
+    void setImage(int width, int height);
     // Contains the image rgb values for each pixel.
     RGB **rgb_image;
 };
