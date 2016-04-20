@@ -40,21 +40,5 @@ public:
 	RGB getPixel(int i) const;
 
 private:
-    std::map<int, std::map<int, RGB>> image;
-    std::pair<const int, std::map<int, RGB, std::less<int>, std::allocator<std::pair<const int, RGB>>>>* image_pointer;
-
-
-
-    //std::vector<std::vector<RGB>> image;
-	void initVector(const int width, const int height);
-	void copy_vimage(const RGBImageStudent &other);
-	void emptyArray();
-    std::vector<std::vector<RGB>> vector_image;
-    std::map<int, RGB> map_image;
-	const int ARRAYSIZE;
-	// make multi dimensional array, 1 holds x and y, the other holds pixel rgb
-	RGB **vi_array;
-	std::vector < std::array<uint8_t, rgb> > v_image;
-    int pixels;
-
+	
 };

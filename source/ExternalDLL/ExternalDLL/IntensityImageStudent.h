@@ -38,6 +38,4 @@ public:
 	Intensity getPixel(int i) const;
 
 private:
-    std::map<int, std::map<int, Intensity>> image;
-    std::pair<const int, std::map<int, Intensity, std::less<int>, std::allocator<std::pair<const int, Intensity>>>>* image_pointer;
 };
