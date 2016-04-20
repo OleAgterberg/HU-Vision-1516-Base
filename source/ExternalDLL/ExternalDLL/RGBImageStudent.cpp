@@ -6,15 +6,14 @@ RGBImageStudent::RGBImageStudent() : RGBImage() {
 	//TODO: Nothing
 }
 
-RGBImageStudent::RGBImageStudent(const RGBImageStudent &other) : RGBImage(other.getWidth(), other.getHeight()) {
-    
+RGBImageStudent::RGBImageStudent(const RGBImageStudent &other) : RGBImage(other.getWidth(), other.getHeight()){    
 	//TODO: Create a copy from the other object
 	// Copy rgbimage contents
 	// Ferdi Method
 	//initVector(other.getWidth(), other.getHeight());
 }
 
-RGBImageStudent::RGBImageStudent(const int width, const int height) {
+RGBImageStudent::RGBImageStudent(const int width, const int height) : RGBImage(width, height){
     
 	//TODO: Initialize pixel storage
 
@@ -26,7 +25,6 @@ RGBImageStudent::~RGBImageStudent() {
 }
 
 void RGBImageStudent::set(const int width, const int height) {
-
 	//TODO: resize or create a new pixel storage (Don't forget to delete the old storage)
 }
 
@@ -75,5 +73,9 @@ RGB RGBImageStudent::getPixel(int i) const {
 }
 
 void RGBImageStudent::setImage(const RGBImageStudent &other){
+    
+}
+
+void RGBImageStudent::setImage(int width, int height){
 
 }

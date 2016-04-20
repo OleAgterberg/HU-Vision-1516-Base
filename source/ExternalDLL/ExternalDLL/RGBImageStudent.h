@@ -41,9 +41,6 @@ public:
 
 private:
     setImage(const RGBImageStudent &other);
-    // 
+    // Contains the image rgb values for each pixel.
     RGB **rgb_image;
-
-
-
 };
