@@ -22,7 +22,7 @@ RGBImageStudent::RGBImageStudent(const int width, const int height) : RGBImage(w
 }
 
 RGBImageStudent::~RGBImageStudent() {
-    delete_rgb_array(rgb_image);
+    delete_rgb_array(rgb_image, height);
 	//TODO: delete allocated objects
 }
 
@@ -39,20 +39,23 @@ void RGBImageStudent::set(const int width, const int height) {
 	this->height	= height;
 	init_rgb_image();
 	cpy_rgb_array(rgb_image, t_rgb_array, old_width, old_height);
-	delete_rgb_array(t_rgb_array, old_width, old_height);
+	delete_rgb_array(t_rgb_array, old_height);
 }
 
 void RGBImageStudent::set(const RGBImageStudent &other) {
 	//TODO: resize or create a new pixel storage and copy the object (Don't forget to delete the old storage)
 	//int throwError = 0, e = 1 / throwError; This method has been implemented
-    RGB** t_intensity_array = rgb_image;
+    RGB** t_rgb_array = rgb_image;
+    int old_height = height;
+    width = other.width;
+    height = other.height;
     init_rgb_image();
     for (int y = 0; y < height; y++){
         for (int x = 0; x < width; x++){
             setPixel(x, y, other.getPixel(x, y));
         }
     }
-    delete_rgb_array(t_intensity_array);
+    delete_rgb_array(t_rgb_array, old_height);
 }
 
 void RGBImageStudent::setPixel(int x, int y, RGB pixel) {
@@ -77,7 +80,7 @@ RGB RGBImageStudent::getPixel(int i) const {
     int x = i % width, y = i / width;
     return rgb_image[y][x];
 }
-void RGBImageStudent::delete_rgb_array(RGB** array1, int old_width, int old_height) {
+void RGBImageStudent::delete_rgb_array(RGB** array1, int old_height) {
    // if (array1 != nullptr){
         for (size_t i = 0; i < old_height; i++)
         {

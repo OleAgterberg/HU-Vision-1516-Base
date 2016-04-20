@@ -47,7 +47,7 @@ private:
     RGB **rgb_image;
 	
 	// Deletes the pointers within the RGB array
-    void delete_rgb_array(RGB** array1, int old_width, int old_height);
+    void delete_rgb_array(RGB** array1, int old_height);
 
 	// Helper method to init the array to a new size
 	void init_rgb_image();

@@ -38,7 +38,7 @@ public:
 	Intensity getPixel(int i) const;
 
 private:
-    void delete_intensity_array(Intensity** array1);
+    void delete_intensity_array(Intensity** array1, int height);
     void init_intensity_image();
     void cpy_intensity_array(Intensity** array1, Intensity** array2, int width, int height);
     Intensity **intensity_image;

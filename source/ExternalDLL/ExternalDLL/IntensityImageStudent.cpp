@@ -1,7 +1,6 @@
 #include "IntensityImageStudent.h"
 
-IntensityImageStudent::IntensityImageStudent() : IntensityImage() {
-	//TODO: Nothing
+IntensityImageStudent::IntensityImageStudent() : IntensityImage(0, 0) {
     intensity_image = nullptr;
 }
 
@@ -12,95 +11,73 @@ IntensityImageStudent::IntensityImageStudent(const IntensityImageStudent &other)
             setPixel(x, y, other.getPixel(x, y));
         }
     }
-    //TODO: Create a copy from the other object
 }
 
 IntensityImageStudent::IntensityImageStudent(const int width, const int height) : IntensityImage(width, height) {
     init_intensity_image();
-    //TODO: Initialize pixel storage
 }
 
 IntensityImageStudent::~IntensityImageStudent() {
-    delete_intensity_array(intensity_image);
-	//TODO: delete allocated objects
+    delete_intensity_array(intensity_image, height);
 }
 
 void IntensityImageStudent::set(const int width, const int height) {
+    // make temp of intensity_image
     Intensity** t_intensity_array = intensity_image;
     int old_width = this->width;
     int old_height = this->height;
+    // make new empty intensity_image
     this->width = width;
     this->height = height;
     init_intensity_image();
+    // copy old data of to new image
     cpy_intensity_array(intensity_image, t_intensity_array, old_width, old_height);
-    delete_intensity_array(t_intensity_array);
-    //TODO: resize or create a new pixel storage (Don't forget to delete the old storage)
+    // delete old image
+    delete_intensity_array(t_intensity_array, old_height);
 }
 
 void IntensityImageStudent::set(const IntensityImageStudent &other) {
     Intensity** t_intensity_array = intensity_image;
+    int old_height = height;
+    width = other.width;
+    height = other.height;
+
     init_intensity_image();
     for (int y = 0; y < height; y++){
         for (int x = 0; x < width; x++){
             setPixel(x, y, other.getPixel(x, y));
         }
     }
-    delete_intensity_array(intensity_image);
-    //TODO: resize or create a new pixel storage and copy the object (Don't forget to delete the old storage)
+    delete_intensity_array(t_intensity_array, old_height);
 }
 
 void IntensityImageStudent::setPixel(int x, int y, Intensity pixel) {
     intensity_image[y][x] = pixel;
-    //TODO: no comment needed :)
 }
 
 void IntensityImageStudent::setPixel(int i, Intensity pixel) {
     int x = i % width, y = i / width;
     setPixel(x, y, pixel);
-	/*
-	* TODO: set pixel i in "Row-Major Order"
-	*
-	*
-	* Original 2d image (values):
-	* 9 1 2
-	* 4 3 5
-	* 8 7 8
-	*
-	* 1d representation (i, value):
-	* i		value
-	* 0		9
-	* 1		1
-	* 2		2
-	* 3		4
-	* 4		3
-	* 5		5
-	* 6		8
-	* 7		7
-	* 8		8
-	*/
 }
 
 Intensity IntensityImageStudent::getPixel(int x, int y) const {
     return intensity_image[y][x];
-	//TODO: no comment needed :)
 }
 
 Intensity IntensityImageStudent::getPixel(int i) const {
     int x = i % width, y = i / width;
     return intensity_image[y][x];
-	//TODO: see setPixel(int i, RGB pixel)
-
 }
 
 
-void IntensityImageStudent::delete_intensity_array(Intensity** array1)	{
-    if (array1 != nullptr){
-        for (size_t i = 0; i < width; i++)
+void IntensityImageStudent::delete_intensity_array(Intensity** array1, int height)	{
+    //if (array1 != nullptr){
+        for (size_t i = 0; i < height; i++)
         {
             delete[] array1[i];
         }
         delete[] array1;
-    }
+    //}
 }
 
 void IntensityImageStudent::init_intensity_image()	{
