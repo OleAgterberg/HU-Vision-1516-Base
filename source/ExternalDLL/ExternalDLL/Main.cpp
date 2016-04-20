@@ -1,3 +1,4 @@
+
 /*
 * Copyright (c) 2015 DottedEye Designs, Alexander Hustinx, NeoTech Software, Rolf Smit - All Rights Reserved
 * Unauthorized copying of this file, via any medium is strictly prohibited
@@ -15,22 +16,23 @@ bool executeSteps(DLLExecution * executor);
 
 int main(int argc, char * argv[]) {
 
-	//ImageFactory::setImplementation(ImageFactory::DEFAULT);
-	ImageFactory::setImplementation(ImageFactory::STUDENT);
+	ImageFactory::setImplementation(ImageFactory::DEFAULT);
+	//ImageFactory::setImplementation(ImageFactory::STUDENT);
 
-	
-	ImageIO::debugFolder = "../../../";
-	ImageIO::isInDebugMode = false; //If set to false the ImageIO class will skip any image save function calls
 
+	ImageIO::debugFolder = "C:\\Users\\Ole\\Documents\\GitHub\\HU-Vision-1516-Base\\source\\ExternalDLL\\Debug";
+	ImageIO::isInDebugMode = true; //If set to false the ImageIO class will skip any image save function calls
+    ImageFactory::setImplementation(ImageFactory::STUDENT);
 
 
 
 	RGBImage * input = ImageFactory::newRGBImage();
-	if (!ImageIO::loadImage("../../../testsets/Set A/TestSet Images/child-1.png", *input)) {
+    if (!ImageIO::loadImage("C:\\Users\\Ole\\Documents\\GitHub\\HU-Vision-1516-Base\\source\\ExternalDLL\\Debug\\TestSet Images\\vrouw.png", *input)) {
 		std::cout << "Image could not be loaded!" << std::endl;
 		system("pause");
 		return 0;
 	}
+
 
 	ImageIO::saveRGBImage(*input, ImageIO::getDebugFileName("debug.png"));
 
@@ -49,8 +51,6 @@ int main(int argc, char * argv[]) {
 	system("pause");
 	return 1;
 }
-
-
 
 bool executeSteps(DLLExecution * executor) {
 

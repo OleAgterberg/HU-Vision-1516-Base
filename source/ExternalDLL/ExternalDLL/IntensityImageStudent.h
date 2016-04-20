@@ -13,6 +13,7 @@
 
 #pragma once
 #include "IntensityImage.h"
+#include <map>
 class IntensityImageStudent : public IntensityImage {
 public:
 	/*
@@ -35,4 +36,8 @@ public:
 
 	Intensity getPixel(int x, int y) const;
 	Intensity getPixel(int i) const;
+
+private:
+    std::map<int, std::map<int, Intensity>> image;
+    std::pair<const int, std::map<int, Intensity, std::less<int>, std::allocator<std::pair<const int, Intensity>>>>* image_pointer;
 };
