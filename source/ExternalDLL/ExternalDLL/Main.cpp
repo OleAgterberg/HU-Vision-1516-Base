@@ -22,7 +22,8 @@ int main(int argc, char * argv[]) {
 
 	ImageIO::debugFolder = "C:\\Users\\Ole\\Documents\\GitHub\\HU-Vision-1516-Base\\source\\ExternalDLL\\Debug";
 	ImageIO::isInDebugMode = true; //If set to false the ImageIO class will skip any image save function calls
-    ImageFactory::setImplementation(ImageFactory::STUDENT);
+    ImageFactory::setImplementation(ImageFactory::STUDENT);
+
 
 
 
