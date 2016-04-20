@@ -83,7 +83,7 @@ RGB RGBImageStudent::getPixel(int x, int y) const {
 
 RGB RGBImageStudent::getPixel(int i) const {
 	//TODO: see setPixel(int i, RGB pixel)
-	return rgb_image[i & height][i / width];
+	return rgb_image[i % height][i / width];
 }
 void RGBImageStudent::delete_rgb_array()	{
 	for (size_t i = 0; i < width; i++)
