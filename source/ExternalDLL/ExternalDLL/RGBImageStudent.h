@@ -47,4 +47,6 @@ private:
 	void delete_rgb_array();
 	// Helper method to init the array to a new size
 	void init_rgb_image();
+
+	void cpy_rgb_array(RGB** array1, RGB** array2, int width, int height);
 };
