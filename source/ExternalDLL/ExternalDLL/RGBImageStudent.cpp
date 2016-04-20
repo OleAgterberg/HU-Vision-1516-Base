@@ -1,7 +1,7 @@
 #include "RGBImageStudent.h"
 #include <iostream>
 
-RGBImageStudent::RGBImageStudent() : RGBImage(), ARRAYSIZE{ 0 }{
+RGBImageStudent::RGBImageStudent() : RGBImage() {
 	//int throwError = 0, e = 1 / throwError; //Throws error without the need to include a header
 	//TODO: Nothing
 }
