@@ -5,6 +5,7 @@ RGBImageStudent::RGBImageStudent() : RGBImage() {
 	//TODO: Nothing
 	width = 0;
 	height = 0;
+	init_rgb_image();
 }
 
 RGBImageStudent::RGBImageStudent(const RGBImageStudent &other) : RGBImage(other.getWidth(), other.getHeight()){    
