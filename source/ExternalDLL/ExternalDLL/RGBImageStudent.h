@@ -40,5 +40,9 @@ public:
 	RGB getPixel(int i) const;
 
 private:
+    // 
+    RGB **rgb_image;
+
+
 
 };
