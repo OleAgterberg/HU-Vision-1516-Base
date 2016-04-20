@@ -101,6 +101,7 @@ RGB RGBImageStudent::getPixel(int x, int y) const {
 
 RGB RGBImageStudent::getPixel(int i) const {
 	//TODO: see setPixel(int i, RGB pixel)
+
     int x = i % width, y = i / width;
     return rgb_image[y][x];
 }
