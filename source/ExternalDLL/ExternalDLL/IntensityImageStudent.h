@@ -38,4 +38,6 @@ public:
 	Intensity getPixel(int i) const;
 
 private:
+
+    Intensity **intensity_image;
 };

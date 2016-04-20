@@ -40,5 +40,7 @@ public:
 	RGB getPixel(int i) const;
 
 private:
-	
+
+    // Contains the image rgb values for each pixel.
+    RGB **rgb_image;
 };
