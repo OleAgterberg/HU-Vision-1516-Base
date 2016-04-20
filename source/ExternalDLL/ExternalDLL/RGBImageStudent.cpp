@@ -1,5 +1,4 @@
 #include "RGBImageStudent.h"
-
 RGBImageStudent::RGBImageStudent() : RGBImage(0, 0) {
 	// set rgb_image nullptr, safety check
     rgb_image = nullptr;

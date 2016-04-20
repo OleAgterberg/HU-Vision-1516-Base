@@ -10,7 +10,7 @@
 #include "HereBeDragons.h"
 #include "ImageFactory.h"
 #include "DLLExecution.h"
-
+#include "exectimer.h"
 void drawFeatureDebugImage(IntensityImage &image, FeatureMap &features);
 bool executeSteps(DLLExecution * executor);
 
@@ -39,7 +39,8 @@ int main(int argc, char * argv[]) {
 
 	DLLExecution * executor = new DLLExecution(input);
 
-
+	BaseTimer* bt = new BaseTimer();
+	bt->start();
 	if (executeSteps(executor)) {
 		std::cout << "Face recognition successful!" << std::endl;
 		std::cout << "Facial parameters: " << std::endl;
@@ -47,7 +48,10 @@ int main(int argc, char * argv[]) {
 			std::cout << (i+1) << ": " << executor->facialParameters[i] << std::endl;
 		}
 	}
-
+	bt->stop();
+	int n = 100000000;
+	std::cout << "Time for the operation was: " << bt->elapsedSeconds() << std::endl;
+	std::cout << "Time for a single cos()-operation was: " << static_cast<double>(bt->elapsedMicroSeconds()) / static_cast<double>(n) << " mu-seconds" << std::endl;
 	delete executor;
 	system("pause");
 	return 1;
