@@ -26,6 +26,11 @@ RGBImageStudent::~RGBImageStudent() {
 
 void RGBImageStudent::set(const int width, const int height) {
 	//TODO: resize or create a new pixel storage (Don't forget to delete the old storage)
+	RGB** t_rgb_array = rgb_image;
+	delete_rgb_array();
+	this->width		= width;
+	this->height	= height;
+	init_rgb_image();
 }
 
 void RGBImageStudent::set(const RGBImageStudent &other) {
@@ -71,11 +76,19 @@ RGB RGBImageStudent::getPixel(int x, int y) const {
 RGB RGBImageStudent::getPixel(int i) const {
 	//TODO: see setPixel(int i, RGB pixel)
 }
-
-void RGBImageStudent::setImage(const RGBImageStudent &other){
-    
+void RGBImageStudent::delete_rgb_array()	{
+	for (size_t i = 0; i < width; i++)
+	{
+		delete[] rgb_image[i];
+	}
+	delete[] rgb_image;
 }
 
-void RGBImageStudent::setImage(int width, int height){
+void RGBImageStudent::init_rgb_image()	{
+	*rgb_image = new RGB[height];
+	for (size_t i = 0; i < height; i++)
+	{
+		**rgb_image = *new RGB[width];
+	}
 
 }

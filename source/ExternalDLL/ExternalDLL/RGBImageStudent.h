@@ -42,8 +42,11 @@ public:
 
 
 private:
-    void setImage(const RGBImageStudent &other);
-    void setImage(int width, int height);
+    //void setImage(const RGBImageStudent &other);
     // Contains the image rgb values for each pixel.
     RGB **rgb_image;
+	
+	void delete_rgb_array();
+	// Helper method to init the array to a new size
+	void init_rgb_image();
 };
