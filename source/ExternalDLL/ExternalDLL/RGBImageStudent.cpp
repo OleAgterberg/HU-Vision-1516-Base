@@ -1,5 +1,4 @@
 #include "RGBImageStudent.h"
-#include <iostream>
 
 RGBImageStudent::RGBImageStudent() : RGBImage() {
 	//int throwError = 0, e = 1 / throwError; //Throws error without the need to include a header
@@ -98,13 +97,11 @@ RGB RGBImageStudent::getPixel(int x, int y) const {
 }
 
 RGB RGBImageStudent::getPixel(int i) const {
-	//TODO: see setPixel(int i, RGB pixel)
-
     int x = i % width, y = i / width;
     return rgb_image[y][x];
 }
 void RGBImageStudent::delete_rgb_array(RGB** array1) {
-    
+  
 	for (size_t i = 0; i < height; i++)
 	{
 		delete[] array1[i];
