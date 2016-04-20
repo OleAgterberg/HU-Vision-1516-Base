@@ -26,7 +26,7 @@ RGBImageStudent::~RGBImageStudent() {
 
 void RGBImageStudent::set(const int width, const int height) {
 	//TODO: resize or create a new pixel storage (Don't forget to delete the old storage)
-	RGB** t_rgb_array = rgb_image;
+	//RGB** t_rgb_array = rgb_image;
 	delete_rgb_array();
 	this->width		= width;
 	this->height	= height;

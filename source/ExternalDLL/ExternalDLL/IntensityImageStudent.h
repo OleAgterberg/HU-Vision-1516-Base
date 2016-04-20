@@ -38,6 +38,7 @@ public:
 	Intensity getPixel(int i) const;
 
 private:
-
+    void delete_rgb_array();
+    void init_rgb_image();
     Intensity **intensity_image;
 };
