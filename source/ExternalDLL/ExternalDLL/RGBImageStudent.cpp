@@ -1,12 +1,13 @@
 #include "RGBImageStudent.h"
 #include <iostream>
 
-RGBImageStudent::RGBImageStudent() : RGBImage(), ARRAYSIZE{ 0 }{
+RGBImageStudent::RGBImageStudent() : RGBImage() {
 	//int throwError = 0, e = 1 / throwError; //Throws error without the need to include a header
 	//TODO: Nothing
+    std::cout << "make empty imageStudent" << std::endl;
 }
 
-RGBImageStudent::RGBImageStudent(const RGBImageStudent &other) : RGBImage(other.getWidth(), other.getHeight()), ARRAYSIZE{ other.getWidth() * other.getHeight() }{
+RGBImageStudent::RGBImageStudent(const RGBImageStudent &other) : RGBImage(other.getWidth(), other.getHeight()){
     int width = getWidth(), height = getHeight();
     image.clear();
     //image_pointer = image.get_allocator().allocate(width*height);
@@ -17,25 +18,23 @@ RGBImageStudent::RGBImageStudent(const RGBImageStudent &other) : RGBImage(other.
             //std::cout << "(" << pixel.b << ", " << pixel.g << ", " << pixel.r << ") ";
         }
     }
+    std::cout << "make copy of imageStudent" << std::endl;
 	//TODO: Create a copy from the other object
-	// Copy rgbimage contents
-	// Ferdi Method
-	//initVector(other.getWidth(), other.getHeight());
 }
 
-RGBImageStudent::RGBImageStudent(const int width, const int height) : RGBImage(width, height), ARRAYSIZE{ width * height } {
+RGBImageStudent::RGBImageStudent(const int width, const int height) : RGBImage(width, height) {
     //int throwError = 0, e = 1 / throwError;
     image.clear();
 	//TODO: Initialize pixel storage
-
-	// Ferdi Method
-	initVector(width, height);
+    std::cout << "make empty imageStudent" << std::endl;
 }
 
 RGBImageStudent::~RGBImageStudent() {
     //image.get_allocator().deallocate(image_pointer, getWidth() * getHeight());
     image.clear();
 	//TODO: delete allocated objects
+
+    std::cout << "delete imageStudent" << std::endl;
 }
 
 void RGBImageStudent::set(const int width, const int height) {
@@ -58,15 +57,7 @@ void RGBImageStudent::set(const RGBImageStudent &other) {
             setPixel(x, y, other.getPixel(x, y));
         }
     }
-
-    //////////////////////////////////////
-
-	//TODO: resize or create a new pixel storage and copy the object (Don't forget to delete the old storage)
-	emptyArray();	// Deleting old data
-	RGBImage::set(other.getWidth(), other.getHeight());	// setting RGB Image width and height
-	copy_vimage(other);	// Copying other RBGImageStudent content to this RGBImageStudent
-	int throwError = 0, e = 1 / throwError;
-	
+	//TODO: resize or create a new pixel storage and copy the object (Don't forget to delete the old storage)	
 }
 
 void RGBImageStudent::setPixel(int x, int y, RGB pixel) {
@@ -122,6 +113,7 @@ RGB RGBImageStudent::getPixel(int i) const {
     return getPixel(x, y);
 	//TODO: see setPixel(int i, RGB pixel)
 }
+/*
 void RGBImageStudent::copy_vimage(const RGBImageStudent &other)	{
 	// Delete old data
 	vi_array = new RGB*[other.width];
@@ -150,3 +142,4 @@ void RGBImageStudent::emptyArray()	{
 	}
 	delete[] vi_array;
 }
+*/

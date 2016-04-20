@@ -46,15 +46,15 @@ private:
 
 
     //std::vector<std::vector<RGB>> image;
-	void initVector(const int width, const int height);
-	void copy_vimage(const RGBImageStudent &other);
-	void emptyArray();
-    std::vector<std::vector<RGB>> vector_image;
-    std::map<int, RGB> map_image;
-	const int ARRAYSIZE;
+	//void initVector(const int width, const int height);
+	//void copy_vimage(const RGBImageStudent &other);
+	//void emptyArray();
+    //std::vector<std::vector<RGB>> vector_image;
+    //std::map<int, RGB> map_image;
+	//const int ARRAYSIZE =1;
 	// make multi dimensional array, 1 holds x and y, the other holds pixel rgb
-	RGB **vi_array;
-	std::vector < std::array<uint8_t, rgb> > v_image;
-    int pixels;
+	//RGB **vi_array;
+	//std::vector < std::array<uint8_t, rgb> > v_image;
+    //int pixels;
 
 };

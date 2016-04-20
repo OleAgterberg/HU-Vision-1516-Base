@@ -1,7 +1,9 @@
 #include "IntensityImageStudent.h"
+#include <iostream>
 
 IntensityImageStudent::IntensityImageStudent() : IntensityImage() {
 	//TODO: Nothing
+    std::cout << "make new empty intensity image" << std::endl;
 }
 
 IntensityImageStudent::IntensityImageStudent(const IntensityImageStudent &other) : IntensityImage(other.getWidth(), other.getHeight()) {
@@ -13,12 +15,15 @@ IntensityImageStudent::IntensityImageStudent(const IntensityImageStudent &other)
             setPixel(x, y, other.getPixel(x, y));
         }
     }
+    std::cout << "make new intensity image" << std::endl;
     //TODO: Create a copy from the other object
 }
 
 IntensityImageStudent::IntensityImageStudent(const int width, const int height) : IntensityImage(width, height) {
     //image_pointer = image.get_allocator().allocate(width*height);
     image.clear();
+
+    std::cout << "make new intensity image" << std::endl;
     //TODO: Initialize pixel storage
 }
 
