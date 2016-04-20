@@ -46,7 +46,7 @@ private:
     // Contains the image rgb values for each pixel.
     RGB **rgb_image;
 	
-	void delete_rgb_array();
+    void delete_rgb_array(RGB** array1);
 	// Helper method to init the array to a new size
 	void init_rgb_image();
 
