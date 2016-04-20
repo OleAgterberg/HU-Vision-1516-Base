@@ -20,27 +20,31 @@ IntensityImageStudent::IntensityImageStudent(const int width, const int height) 
 }
 
 IntensityImageStudent::~IntensityImageStudent() {
-    delete_intensity_array();
+    delete_intensity_array(intensity_image);
 	//TODO: delete allocated objects
 }
 
 void IntensityImageStudent::set(const int width, const int height) {
-    //Intensity** t_intensity_array = intensity_image;
-    delete_intensity_array();
+    Intensity** t_intensity_array = intensity_image;
+    int old_width = this->width;
+    int old_height = this->height;
     this->width = width;
     this->height = height;
     init_intensity_image();
+    cpy_intensity_array(intensity_image, t_intensity_array, old_width, old_height);
+    delete_intensity_array(t_intensity_array);
     //TODO: resize or create a new pixel storage (Don't forget to delete the old storage)
 }
 
 void IntensityImageStudent::set(const IntensityImageStudent &other) {
-    delete_intensity_array();
+    Intensity** t_intensity_array = intensity_image;
     init_intensity_image();
     for (int y = 0; y < height; y++){
         for (int x = 0; x < width; x++){
             setPixel(x, y, other.getPixel(x, y));
         }
     }
+    delete_intensity_array(intensity_image);
     //TODO: resize or create a new pixel storage and copy the object (Don't forget to delete the old storage)
 }
 
@@ -82,18 +86,18 @@ Intensity IntensityImageStudent::getPixel(int x, int y) const {
 
 Intensity IntensityImageStudent::getPixel(int i) const {
     int x = i % width, y = i / width;
-    return getPixel(x, y);
+    return intensity_image[y][x];
 	//TODO: see setPixel(int i, RGB pixel)
 
 }
 
 
-void IntensityImageStudent::delete_intensity_array()	{
+void IntensityImageStudent::delete_intensity_array(Intensity** array1)	{
     for (size_t i = 0; i < width; i++)
     {
-        delete[] intensity_image[i];
+        delete[] array1[i];
     }
-    delete[] intensity_image;
+    delete[] array1;
 }
 
 void IntensityImageStudent::init_intensity_image()	{
@@ -101,6 +105,14 @@ void IntensityImageStudent::init_intensity_image()	{
     for (size_t i = 0; i < height; i++)
     {
         **intensity_image = *new Intensity[width];
+    }
+
+}
+
+void IntensityImageStudent::cpy_intensity_array(Intensity** array1, Intensity** array2, int width, int height)	{
+    for (size_t i = 0; i < height; i++)
+    {
+        memcpy(array1[i], array2[i], width);
     }
 
 }

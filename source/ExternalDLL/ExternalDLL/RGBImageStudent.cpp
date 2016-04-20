@@ -7,20 +7,27 @@ RGBImageStudent::RGBImageStudent() : RGBImage() {
 }
 
 RGBImageStudent::RGBImageStudent(const RGBImageStudent &other) : RGBImage(other.getWidth(), other.getHeight()){    
-	//TODO: Create a copy from the other object
+    init_rgb_image();
+    for (int y = 0; y < height; y++){
+        for (int x = 0; x < width; x++){
+            setPixel(x, y, other.getPixel(x, y));
+        }
+    }
+    //TODO: Create a copy from the other object
 	// Copy rgbimage contents
 	// Ferdi Method
 	//initVector(other.getWidth(), other.getHeight());
 }
 
 RGBImageStudent::RGBImageStudent(const int width, const int height) : RGBImage(width, height){
-    
+    init_rgb_image();
 	//TODO: Initialize pixel storage
 
 	// Ferdi Method
 }
 
 RGBImageStudent::~RGBImageStudent() {
+    delete_rgb_array(rgb_image);
 	//TODO: delete allocated objects
 }
 
@@ -37,21 +44,31 @@ void RGBImageStudent::set(const int width, const int height) {
 	this->height	= height;
 	init_rgb_image();
 	cpy_rgb_array(rgb_image, t_rgb_array, old_width, old_height);
-	delete_rgb_array();
+	delete_rgb_array(t_rgb_array);
 }
 
 void RGBImageStudent::set(const RGBImageStudent &other) {
 	//TODO: resize or create a new pixel storage and copy the object (Don't forget to delete the old storage)
 	//int throwError = 0, e = 1 / throwError; This method has been implemented
-	
+    RGB** t_intensity_array = rgb_image;
+    init_rgb_image();
+    for (int y = 0; y < height; y++){
+        for (int x = 0; x < width; x++){
+            setPixel(x, y, other.getPixel(x, y));
+        }
+    }
+    delete_rgb_array(rgb_image);
 }
 
 void RGBImageStudent::setPixel(int x, int y, RGB pixel) {
+    rgb_image[y][x] = pixel;
     //TODO: Create a copy from the other 
 	//TODO: no comment needed :)
 }
 
 void RGBImageStudent::setPixel(int i, RGB pixel) {
+    int x = i % width, y = i / width;
+    setPixel(x, y, pixel);
 	/*
 	* TODO: set pixel i in "Row-Major Order"
 	*
@@ -83,14 +100,15 @@ RGB RGBImageStudent::getPixel(int x, int y) const {
 
 RGB RGBImageStudent::getPixel(int i) const {
 	//TODO: see setPixel(int i, RGB pixel)
-	return rgb_image[i & height][i / width];
+    int x = i % width, y = i / width;
+    return rgb_image[x][y];
 }
-void RGBImageStudent::delete_rgb_array()	{
+void RGBImageStudent::delete_rgb_array(RGB** array1)	{
 	for (size_t i = 0; i < width; i++)
 	{
-		delete[] rgb_image[i];
+		delete[] array1[i];
 	}
-	delete[] rgb_image;
+	delete[] array1;
 }
 
 void RGBImageStudent::init_rgb_image()	{
