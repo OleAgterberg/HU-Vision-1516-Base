@@ -28,9 +28,18 @@ RGBImageStudent::~RGBImageStudent() {
 }
 
 void RGBImageStudent::set(const int width, const int height) {
+	//TODO: resize or create a new pixel storage (Don't forget to delete the old storage)
 	RGBImage::set(width, height);
 	int throwError = 0, e = 1 / throwError;
-	//TODO: resize or create a new pixel storage (Don't forget to delete the old storage)
+	
+	RGB **vi_array_t;
+	vi_array_t = new RGB*[width];
+	for (size_t i = 0; i < width; i++)
+	{
+		vi_array_t[i] = new RGB[height]{ RGB(0, 0, 0) };
+	}
+	memcpy(vi_array_t, vi_array, (width * height * sizeof(RGB))); // should be done for each row!
+
 }
 
 void RGBImageStudent::set(const RGBImageStudent &other) {
@@ -38,7 +47,7 @@ void RGBImageStudent::set(const RGBImageStudent &other) {
 	emptyArray();	// Deleting old data
 	RGBImage::set(other.getWidth(), other.getHeight());	// setting RGB Image width and height
 	copy_vimage(other);	// Copying other RBGImageStudent content to this RGBImageStudent
-	int throwError = 0, e = 1 / throwError;
+	//int throwError = 0, e = 1 / throwError; This method has been implemented
 	
 }
 
