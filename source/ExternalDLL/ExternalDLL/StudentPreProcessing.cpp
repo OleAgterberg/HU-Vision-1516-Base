@@ -1,7 +1,9 @@
 #include "StudentPreProcessing.h"
 #include "IntensityImageStudent.h"
 
-// used Luminosity
+/** 
+*   used Luminosity with the values ( 0.21 R + 0.72 G + 0.07 B )
+**/
 IntensityImage * StudentPreProcessing::stepToIntensityImage(const RGBImage &image) const {
     IntensityImageStudent *intensitye_image = new IntensityImageStudent();
     int width = image.getWidth(), heigth = image.getHeight();
@@ -13,7 +15,6 @@ IntensityImage * StudentPreProcessing::stepToIntensityImage(const RGBImage &imag
             intensitye_image->setPixel(x, y, intensity);
         }
     }
-    // 0.21 R + 0.72 G + 0.07 B.
 	return intensitye_image;
 }
 

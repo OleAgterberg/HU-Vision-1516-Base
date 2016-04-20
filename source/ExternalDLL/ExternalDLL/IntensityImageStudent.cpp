@@ -2,6 +2,7 @@
 
 IntensityImageStudent::IntensityImageStudent() : IntensityImage() {
 	//TODO: Nothing
+    intensity_image = nullptr;
 }
 
 IntensityImageStudent::IntensityImageStudent(const IntensityImageStudent &other) : IntensityImage(other.getWidth(), other.getHeight()) {
