@@ -93,18 +93,20 @@ Intensity IntensityImageStudent::getPixel(int i) const {
 
 
 void IntensityImageStudent::delete_intensity_array(Intensity** array1)	{
-    for (size_t i = 0; i < width; i++)
-    {
-        delete[] array1[i];
+    if (array1 != nullptr){
+        for (size_t i = 0; i < width; i++)
+        {
+            delete[] array1[i];
+        }
+        delete[] array1;
     }
-    delete[] array1;
 }
 
 void IntensityImageStudent::init_intensity_image()	{
-    *intensity_image = new Intensity[height];
+    intensity_image = new Intensity*[height];
     for (size_t i = 0; i < height; i++)
     {
-        **intensity_image = *new Intensity[width];
+        intensity_image[i] = new Intensity[width];
     }
 
 }
