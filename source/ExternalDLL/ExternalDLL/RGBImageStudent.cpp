@@ -13,10 +13,6 @@ RGBImageStudent::RGBImageStudent(const RGBImageStudent &other) : RGBImage(other.
             setPixel(x, y, other.getPixel(x, y));
         }
     }
-    //TODO: Create a copy from the other object
-	// Copy rgbimage contents
-	// Ferdi Method
-	//initVector(other.getWidth(), other.getHeight());
 }
 
 RGBImageStudent::RGBImageStudent(const int width, const int height) : RGBImage(width, height){
@@ -96,18 +92,18 @@ void RGBImageStudent::setPixel(int i, RGB pixel) {
 
 RGB RGBImageStudent::getPixel(int x, int y) const {
 	//TODO: no comment needed :)
-	return rgb_image[x][y];
+	return rgb_image[y][x];
 }
 
 RGB RGBImageStudent::getPixel(int i) const {
 	//TODO: see setPixel(int i, RGB pixel)
 
     int x = i % width, y = i / width;
-    return rgb_image[x][y];
+    return rgb_image[y][x];
 }
 void RGBImageStudent::delete_rgb_array(RGB** array1) {
     if (array1 != nullptr){
-        for (size_t i = 0; i < width; i++)
+        for (size_t i = 0; i < height; i++)
         {
             delete[] array1[i];
         }
