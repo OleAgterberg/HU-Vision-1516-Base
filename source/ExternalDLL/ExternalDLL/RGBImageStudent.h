@@ -42,13 +42,16 @@ public:
 
 
 private:
-    //void setImage(const RGBImageStudent &other);
-    // Contains the image rgb values for each pixel.
+
+    // Contains the image rgb values for each pixel
     RGB **rgb_image;
 	
+	// Deletes the pointers within the RGB array
     void delete_rgb_array(RGB** array1);
+
 	// Helper method to init the array to a new size
 	void init_rgb_image();
 
+	// Copies the RBG contents from array2 into array 1. Needs the old width and height of the old image data
 	void cpy_rgb_array(RGB** array1, RGB** array2, int width, int height);
 };

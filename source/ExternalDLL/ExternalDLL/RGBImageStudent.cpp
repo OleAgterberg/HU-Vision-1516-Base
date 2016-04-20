@@ -4,6 +4,8 @@
 RGBImageStudent::RGBImageStudent() : RGBImage() {
 	//int throwError = 0, e = 1 / throwError; //Throws error without the need to include a header
 	//TODO: Nothing
+	width = 0;
+	height = 0;
 }
 
 RGBImageStudent::RGBImageStudent(const RGBImageStudent &other) : RGBImage(other.getWidth(), other.getHeight()){    
@@ -102,13 +104,13 @@ RGB RGBImageStudent::getPixel(int i) const {
     return rgb_image[y][x];
 }
 void RGBImageStudent::delete_rgb_array(RGB** array1) {
-    if (array1 != nullptr){
-        for (size_t i = 0; i < height; i++)
-        {
-            delete[] array1[i];
-        }
-        delete[] array1;
-    }
+    
+	for (size_t i = 0; i < height; i++)
+	{
+		delete[] array1[i];
+	}
+	delete[] array1;
+
 }
 
 void RGBImageStudent::init_rgb_image()	{
