@@ -6,6 +6,7 @@
 
 #pragma once
 #include "Localization.h"
+#include <iostream>
 class StudentLocalization :
 	public Localization {
 public:
