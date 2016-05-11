@@ -27,6 +27,8 @@ bool StudentLocalization::stepFindExactEyes(const IntensityImage &image, Feature
     std::vector<Point2D<double>> head_top_points = head_top.getPoints();
     std::vector<Point2D<double>> head_left_points = head_left.getPoints();
     std::vector<Point2D<double>> head_right_points = head_right.getPoints();
+    std::vector<Point2D<double>> nose_bottom_points = nose_bottom.getPoints();
+    std::vector<Point2D<double>> mouth_center_points = mouth_center.getPoints();
 
     /*
     Feature left_eye = features.getFeature(Feature::FEATURE_EYE_LEFT_RECT);
