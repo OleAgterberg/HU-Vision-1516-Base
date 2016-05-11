@@ -16,15 +16,15 @@ bool executeSteps(DLLExecution * executor);
 
 int main(int argc, char * argv[]) {
 
-	//ImageFactory::setImplementation(ImageFactory::DEFAULT);
-	ImageFactory::setImplementation(ImageFactory::STUDENT);
+	ImageFactory::setImplementation(ImageFactory::DEFAULT);
+	//ImageFactory::setImplementation(ImageFactory::STUDENT);
 
 
 	ImageIO::debugFolder = "C:\\Users\\Ole\\Documents\\GitHub\\HU-Vision-1516-Base\\source\\ExternalDLL\\Debug";
 	ImageIO::isInDebugMode = true; //If set to false the ImageIO class will skip any image save function calls
 
 	RGBImage * input = ImageFactory::newRGBImage();
-    if (!ImageIO::loadImage("C:\\Users\\Ole\\Documents\\GitHub\\HU-Vision-1516-Base\\source\\ExternalDLL\\Debug\\TestSet Images\\vrouw.png", *input)) {
+    if (!ImageIO::loadImage("C:\\Users\\Ole\\Documents\\GitHub\\HU-Vision-1516-Base\\source\\ExternalDLL\\Debug\\TestSet Images\\vrouwetje.png", *input)) {
 		std::cout << "Image could not be loaded!" << std::endl;
 		system("pause");
 		return 0;
@@ -47,14 +47,6 @@ int main(int argc, char * argv[]) {
     executeSteps(executor);
     bt_0->stop();
 
-    ImageFactory::setImplementation(ImageFactory::DEFAULT);
-    //ImageFactory::setImplementation(ImageFactory::STUDENT);
-
-    BaseTimer* bt_1 = new BaseTimer();
-    bt_1->start();
-    executeSteps(executor);
-    bt_1->stop();
-    std::cout << "Time for the DEFAULT was: " << bt_1->elapsedSeconds() << std::endl;
     std::cout << "Time for the STUDENT was: " << bt_0->elapsedSeconds() << std::endl;
 
 
@@ -121,7 +113,6 @@ bool executeSteps(DLLExecution * executor) {
 		std::cout << "Localization step 5 failed!" << std::endl;
 		return false;
 	}
-
 
 
 	//Execute the extraction steps
