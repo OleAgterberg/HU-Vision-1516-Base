@@ -8,7 +8,7 @@ IntensityImageStudent::IntensityImageStudent(const IntensityImageStudent &other)
     init_intensity_image();
     for (int y = 0; y < height; y++){
         for (int x = 0; x < width; x++){
-            setPixel(x, y, other.getPixel(x, y));
+            intensity_image[x][y] = other.getPixel(x, y);
         }
     }
 }
@@ -45,7 +45,7 @@ void IntensityImageStudent::set(const IntensityImageStudent &other) {
     init_intensity_image();
     for (int y = 0; y < height; y++){
         for (int x = 0; x < width; x++){
-            setPixel(x, y, other.getPixel(x, y));
+            intensity_image[x][y] = other.getPixel(x, y);
         }
     }
     delete_intensity_array(t_intensity_array, old_height);

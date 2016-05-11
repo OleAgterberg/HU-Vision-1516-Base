@@ -22,10 +22,6 @@ int main(int argc, char * argv[]) {
 
 	ImageIO::debugFolder = "C:\\Users\\Ole\\Documents\\GitHub\\HU-Vision-1516-Base\\source\\ExternalDLL\\Debug";
 	ImageIO::isInDebugMode = true; //If set to false the ImageIO class will skip any image save function calls
-    ImageFactory::setImplementation(ImageFactory::STUDENT);
-
-
-
 
 	RGBImage * input = ImageFactory::newRGBImage();
     if (!ImageIO::loadImage("C:\\Users\\Ole\\Documents\\GitHub\\HU-Vision-1516-Base\\source\\ExternalDLL\\Debug\\TestSet Images\\vrouw.png", *input)) {
@@ -38,20 +34,30 @@ int main(int argc, char * argv[]) {
 	ImageIO::saveRGBImage(*input, ImageIO::getDebugFileName("debug.png"));
 
 	DLLExecution * executor = new DLLExecution(input);
+    
+    if (executeSteps(executor)) {
+        std::cout << "Face recognition successful!" << std::endl;
+        std::cout << "Facial parameters: " << std::endl;
+        for (int i = 0; i < 16; i++) {
+            std::cout << (i + 1) << ": " << executor->facialParameters[i] << std::endl;
+        }
+    }
+	BaseTimer* bt_0 = new BaseTimer();
+    bt_0->start();
+    executeSteps(executor);
+    bt_0->stop();
 
-	BaseTimer* bt = new BaseTimer();
-	bt->start();
-	if (executeSteps(executor)) {
-		std::cout << "Face recognition successful!" << std::endl;
-		std::cout << "Facial parameters: " << std::endl;
-		for (int i = 0; i < 16; i++) {
-			std::cout << (i+1) << ": " << executor->facialParameters[i] << std::endl;
-		}
-	}
-	bt->stop();
-	int n = 100000000;
-	std::cout << "Time for the operation was: " << bt->elapsedSeconds() << std::endl;
-	std::cout << "Time for a single cos()-operation was: " << static_cast<double>(bt->elapsedMicroSeconds()) / static_cast<double>(n) << " mu-seconds" << std::endl;
+    ImageFactory::setImplementation(ImageFactory::DEFAULT);
+    //ImageFactory::setImplementation(ImageFactory::STUDENT);
+
+    BaseTimer* bt_1 = new BaseTimer();
+    bt_1->start();
+    executeSteps(executor);
+    bt_1->stop();
+    std::cout << "Time for the DEFAULT was: " << bt_1->elapsedSeconds() << std::endl;
+    std::cout << "Time for the STUDENT was: " << bt_0->elapsedSeconds() << std::endl;
+
+
 	delete executor;
 	system("pause");
 	return 1;

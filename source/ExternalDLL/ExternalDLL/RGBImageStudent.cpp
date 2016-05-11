@@ -8,26 +8,21 @@ RGBImageStudent::RGBImageStudent(const RGBImageStudent &other) : RGBImage(other.
     init_rgb_image();
     for (int y = 0; y < height; y++){
         for (int x = 0; x < width; x++){
-            setPixel(x, y, other.getPixel(x, y));
+            rgb_image[x][y] = other.getPixel(x, y);
         }
     }
 }
 
 RGBImageStudent::RGBImageStudent(const int width, const int height) : RGBImage(width, height){
     init_rgb_image();
-	//TODO: Initialize pixel storage
-
 	// Ferdi Method
 }
 
 RGBImageStudent::~RGBImageStudent() {
     delete_rgb_array(rgb_image, height);
-	//TODO: delete allocated objects
 }
 
 void RGBImageStudent::set(const int width, const int height) {
-	//TODO: resize or create a new pixel storage (Don't forget to delete the old storage)
-
 	RGB** t_rgb_array = rgb_image;
 	
 	//delete_rgb_array();
@@ -42,8 +37,6 @@ void RGBImageStudent::set(const int width, const int height) {
 }
 
 void RGBImageStudent::set(const RGBImageStudent &other) {
-	//TODO: resize or create a new pixel storage and copy the object (Don't forget to delete the old storage)
-	//int throwError = 0, e = 1 / throwError; This method has been implemented
     RGB** t_rgb_array = rgb_image;
     int old_height = height;
     width = other.width;
@@ -51,7 +44,7 @@ void RGBImageStudent::set(const RGBImageStudent &other) {
     init_rgb_image();
     for (int y = 0; y < height; y++){
         for (int x = 0; x < width; x++){
-            setPixel(x, y, other.getPixel(x, y));
+            rgb_image[x][y] = other.getPixel(x, y);
         }
     }
     delete_rgb_array(t_rgb_array, old_height);
@@ -59,8 +52,6 @@ void RGBImageStudent::set(const RGBImageStudent &other) {
 
 void RGBImageStudent::setPixel(int x, int y, RGB pixel) {
     rgb_image[y][x] = pixel;
-    //TODO: Create a copy from the other 
-	//TODO: no comment needed :)
 }
 
 void RGBImageStudent::setPixel(int i, RGB pixel) {
