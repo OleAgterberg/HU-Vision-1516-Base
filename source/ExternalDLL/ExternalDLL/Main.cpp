@@ -19,39 +19,38 @@ int main(int argc, char * argv[]) {
 	//ImageFactory::setImplementation(ImageFactory::DEFAULT);
 	ImageFactory::setImplementation(ImageFactory::STUDENT);
 
-
-	ImageIO::debugFolder = "C:\\Users\\Ole\\Documents\\GitHub\\HU-Vision-1516-Base\\source\\ExternalDLL\\Debug";
+	ImageIO::debugFolder = "../ExternalDLL/Debug";
 	ImageIO::isInDebugMode = true; //If set to false the ImageIO class will skip any image save function calls
-    ImageFactory::setImplementation(ImageFactory::STUDENT);
-
-
-
 
 	RGBImage * input = ImageFactory::newRGBImage();
-    if (!ImageIO::loadImage("C:\\Users\\Ole\\Documents\\GitHub\\HU-Vision-1516-Base\\source\\ExternalDLL\\Debug\\TestSet Images\\vrouw.png", *input)) {
-		std::cout << "Image could not be loaded!" << std::endl;
+	std::string img_name = "child-3.png";//"child-1.png";
+	std::string img_source = argv[1] + img_name;
+	if (!ImageIO::loadImage(img_source, *input)) {
+		std::cerr << "Image could not be loaded!" << std::endl;
+		std::cerr << "Image path is: " << argv[0] + img_name << std::endl;
 		system("pause");
 		return 0;
 	}
-
-
+	
 	ImageIO::saveRGBImage(*input, ImageIO::getDebugFileName("debug.png"));
 
 	DLLExecution * executor = new DLLExecution(input);
+    
+    if (executeSteps(executor)) {
+        std::cout << "Face recognition successful!" << std::endl;
+        std::cout << "Facial parameters: " << std::endl;
+        for (int i = 0; i < 16; i++) {
+            std::cout << (i + 1) << ": " << executor->facialParameters[i] << std::endl;
+        }
+    }
+	BaseTimer* bt_0 = new BaseTimer();
+    bt_0->start();
+    executeSteps(executor);
+    bt_0->stop();
 
-	BaseTimer* bt = new BaseTimer();
-	bt->start();
-	if (executeSteps(executor)) {
-		std::cout << "Face recognition successful!" << std::endl;
-		std::cout << "Facial parameters: " << std::endl;
-		for (int i = 0; i < 16; i++) {
-			std::cout << (i+1) << ": " << executor->facialParameters[i] << std::endl;
-		}
-	}
-	bt->stop();
-	int n = 100000000;
-	std::cout << "Time for the operation was: " << bt->elapsedSeconds() << std::endl;
-	std::cout << "Time for a single cos()-operation was: " << static_cast<double>(bt->elapsedMicroSeconds()) / static_cast<double>(n) << " mu-seconds" << std::endl;
+    std::cout << "Time for the STUDENT was: " << bt_0->elapsedSeconds() << std::endl;
+
+
 	delete executor;
 	system("pause");
 	return 1;
@@ -110,13 +109,11 @@ bool executeSteps(DLLExecution * executor) {
 		std::cout << "Localization step 4 failed!" << std::endl;
 		return false;
 	}
-
-	if (!executor->executeLocalizationStep5(false)) {
+	bool trueman = true;
+	if (!executor->executeLocalizationStep5(trueman)) {
 		std::cout << "Localization step 5 failed!" << std::endl;
 		return false;
 	}
-
-
 
 	//Execute the extraction steps
 	if (!executor->prepareExtraction()) {
@@ -166,7 +163,6 @@ void drawFeatureDebugImage(IntensityImage &image, FeatureMap &features) {
 	Point2D<double> nostrilLeft = features.getFeature(Feature::FEATURE_NOSTRIL_LEFT)[0];
 	Point2D<double> nostrilRight = features.getFeature(Feature::FEATURE_NOSTRIL_RIGHT)[0];
 	Point2D<double> noseBottom = features.getFeature(Feature::FEATURE_NOSE_BOTTOM)[0];
-
 
 	//These (weird) methods can be used to draw debug points
 	HereBeDragons::TriumphInLoveFleshStaysNoFatherReason(*debug, noseLeft, colorRed);
