@@ -16,7 +16,7 @@ public:
 	bool stepFindChinContours(const IntensityImage &image, FeatureMap &features) const;
 	bool stepFindNoseEndsAndEyes(const IntensityImage &image, FeatureMap &features) const;
 	bool stepFindExactEyes(const IntensityImage &image, FeatureMap &features) const;
-	std::vector<unsigned int> getEyeCandy(const std::vector<unsigned int>& histo_x, const std::vector<unsigned int>& histo_y) const;
+	std::vector<unsigned int> getEyeCandy(const std::vector<unsigned int>& histo, const int offset, bool deep) const;
 
 };
 
