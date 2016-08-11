@@ -23,7 +23,7 @@ int main(int argc, char * argv[]) {
 	ImageIO::isInDebugMode = true; //If set to false the ImageIO class will skip any image save function calls
 
 	RGBImage * input = ImageFactory::newRGBImage();
-	std::string img_name = "child-1.png";//"child-1.png";
+	std::string img_name = "female-12.png";//"child-1.png";
 	std::string img_source = argv[1] + img_name;
 	if (!ImageIO::loadImage(img_source, *input)) {
 		std::cerr << "Image could not be loaded!" << std::endl;

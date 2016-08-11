@@ -113,7 +113,7 @@ bool StudentLocalization::stepFindExactEyes(const IntensityImage &image, Feature
     int deepest_dall_y[3] = { 0, 0, 0 }; // 0: deep   1: y-begin    2: y-end
     for (int dal : eyeCandyResults_dall){
         int high_top = -1, low_top = -1;
-        for (int i = 0; i < eyeCandyResults_top.size(); i++){
+        for (int i = 1; i < eyeCandyResults_top.size(); i++){
             if (dal < eyeCandyResults_top[i]){
                 high_top = eyeCandyResults_top[i];
                 low_top = eyeCandyResults_top[i - 1];
@@ -142,7 +142,11 @@ bool StudentLocalization::stepFindExactEyes(const IntensityImage &image, Feature
 
 		}
 	}
+    for (auto a : histo_x){
+        std::cout << a << std::endl;
+    }
     offset = top_left.x;
+    std::cout << offset << " = offset" << std::endl;
     eyeCandyResults_dall = getEyeCandy(histo_x, offset, true);
     eyeCandyResults_top = getEyeCandy(histo_x, offset, false);
     
