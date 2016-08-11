@@ -17,7 +17,11 @@ public:
 	bool stepFindNoseEndsAndEyes(const IntensityImage &image, FeatureMap &features) const;
 	bool stepFindExactEyes(const IntensityImage &image, FeatureMap &features) const;
 	std::vector<unsigned int> getEyeCandy(const std::vector<unsigned int>& histo, const int offset, bool deep) const;
+    std::vector<unsigned int> histogram_x(const IntensityImage &image);
+    std::vector<unsigned int> histogram_y(const IntensityImage &image);
 private:
-	int store_x, store_y;
+    Point2D<double>* top_left = nullptr;
+    Point2D<double>* bottom_right = nullptr;
+
 };
 

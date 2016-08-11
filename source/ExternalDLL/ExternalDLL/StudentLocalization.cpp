@@ -60,7 +60,37 @@ std::vector<unsigned int> StudentLocalization::getEyeCandy(const std::vector<uns
 	return x_rises;
 }
 
+// points: (x,y) top_left (x,y) bottom_right
+std::vector<unsigned int> StudentLocalization::histogram_x(const IntensityImage &image, int points[4]){
+    std::vector<unsigned int> histo;
 
+    histo.resize(points[0] - points[2], 0);
+    for (int x = points[0]; x < points[2]; x++)
+    {
+        for (int y = points[1]; y < points[3]; y++)	{
+            Intensity newIntensity = image.getPixel(x, y);
+            if (newIntensity == 255)
+                histo[x - points[1]]++;
+        }
+    }
+    return histo;
+}
+
+// points: (x,y) top_left (x,y) bottom_right
+std::vector<unsigned int> StudentLocalization::histogram_y(const IntensityImage &image){
+    std::vector<unsigned int> histo;
+    
+   /* histo.resize(points[1] - points[3], 0);
+    for (int x = points[0]; x < points[2]; x++)
+    {
+        for (int y = points[1]; y < points[3]; y++)	{
+            Intensity newIntensity = image.getPixel(x, y);
+            if (newIntensity == 255)
+                histo[x - points[1]]++;
+        }
+    }*/
+    return histo;
+}
 
 bool StudentLocalization::stepFindExactEyes(const IntensityImage &image, FeatureMap &features) const {
 	Feature head_top = features.getFeature(Feature::FEATURE_HEAD_TOP);
@@ -76,36 +106,23 @@ bool StudentLocalization::stepFindExactEyes(const IntensityImage &image, Feature
 	std::vector<Point2D<double>> nose_bottom_right_points = nose_bottom_right.getPoints();
 
 	// get first rect around the eyes
-	Point2D<double> top_left;
-	Point2D<double> bottom_right;
-	top_left.x = head_left_points[0].x;
-	top_left.y = head_top_points[0].y;
-	bottom_right.x = head_right_points[0].x;
-	bottom_right.y = nose_bottom_right_points[0].y;
+	top_left->x = head_left_points[0].x;
+	top_left->y = head_top_points[0].y;
+	bottom_right->x = head_right_points[0].x;
+	bottom_right->y = nose_bottom_right_points[0].y;
 	//int height = nose_bottom_points[0].getY() - head_top_points[0].getY();
 	//std::cout << "height between head top and nose bottom is: " << height << std::endl;
 	
 	int width = head_right_points[0].getX() - head_left_points[0].getX();
 
 	std::cout << "width between left and right side of head is: " << width << std::endl;
-	std::vector<unsigned int> histo_general;
 	std::vector<unsigned int> histo_y;
 	std::vector<unsigned int> histo_x;
-	histo_general.resize(256, 0);
 	histo_y.resize(bottom_right.y - top_left.y, 0);
 	histo_x.resize(bottom_right.x - top_left.x, 0);
-	for (int i = top_left.y; i < bottom_right.y; i++)
-	{
-		for (int j = top_left.x; j < bottom_right.x; j++)	{
-			Intensity newIntensity = image.getPixel(j, i);
-			if (newIntensity == 255)
-				histo_y[i - top_left.y]++;
-			if(newIntensity <= 255)
-				histo_general[newIntensity]++;
-			
-		}
-	}
 	
+    //histogram(image, histo_y, top_left);
+
     int offset = top_left.y;
     std::vector<unsigned int> eyeCandyResults_dall = getEyeCandy(histo_y, offset, true);
     std::vector<unsigned int> eyeCandyResults_top = getEyeCandy(histo_y, offset, false);
@@ -174,31 +191,5 @@ bool StudentLocalization::stepFindExactEyes(const IntensityImage &image, Feature
 
     std::cout << "deepest dal in x = " << deepest_dall_x[0] << " begin: " << deepest_dall_x[1] << " end: " << deepest_dall_x[2] << std::endl;
     
-
-
-    /*
-    for (unsigned int i = 0; i < eyeCandyResults.size(); i++)	{
-		std::cout << "deepest points of falls found: " << eyeCandyResults[i] << std::endl;
-	}
-	for (size_t i = 0; i < histo_general.size(); i++)
-	{
-		std::cout << "Histo y: " << histo_general[i] << std::endl;
-	}*/
-	for (size_t i = 0; i < histo_y.size(); i++)
-	{
-		//std::cout << "y: " << i << "value: " << histo_y[i] << std::endl;
-	}
-	std::cout << std::endl;
-/*  Feature left_eye = features.getFeature(Feature::FEATURE_EYE_LEFT_RECT);
-    Feature right_eye = features.getFeature(Feature::FEATURE_EYE_RIGHT_RECT);
-    std::vector<Point2D<double>> left_points = left_eye.getPoints();
-    std::vector<Point2D<double>> right_points = right_eye.getPoints();
-
-    std::cout << " size of rect: " << left_points.size() << std::endl;
-    for (Point2D<double> n : left_points){
-        std::cout << "(" << n.getX() << "," << n.getY() << ")\n";
-    }
-    */
-	std::cout << "width between left and right side of head is: " << width << std::endl;
 	return true;
 }
