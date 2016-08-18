@@ -201,6 +201,9 @@ bool StudentLocalization::stepFindExactEyes(const IntensityImage &image, Feature
     top_left->y = deepest_dall_y[1];
     bottom_right->y = deepest_dall_y[2];
 
+    std::cout << "top_left = (" << top_left->x << "," << top_left->y << ")\n";
+    std::cout << "bottom_right = (" << bottom_right->x << "," << bottom_right->y << ")\n";
+
     // Start of histo_x
     std::vector<unsigned int> histo_x;
     histo_x.resize(bottom_right->x - top_left->x, 0);
@@ -211,21 +214,26 @@ bool StudentLocalization::stepFindExactEyes(const IntensityImage &image, Feature
     eyeCandyResults_dall = getEyeCandy(histo_x, offset, true);
     eyeCandyResults_top = getEyeCandy(histo_x, offset, false);
     
-    std::vector<int> deepest_dall_x = { 0, 0, 0 }; // 0: deep   1: x-begin    2: x-end
+    std::vector<int> smallest_dall_x = { 2000, 0, 0 }; // 0: deep   1: x-begin    2: x-end
     std::vector<std::vector<int>> dalls_x;
     dalls_x = get_dalls(eyeCandyResults_dall, eyeCandyResults_top, histo_x, offset);
 
 
     for (auto i : dalls_x){
-        if (i[0] > deepest_dall_x[0]){
-            deepest_dall_x[0] = i[0];
-            deepest_dall_x[1] = i[1];
-            deepest_dall_x[2] = i[2];
+        if (i[0] < smallest_dall_x[0]){
+            smallest_dall_x[0] = i[0];
+            smallest_dall_x[1] = i[1];
+            smallest_dall_x[2] = i[2];
         }
         std::cout << "dal in x = " << i[0] << " begin: " << i[1] << " end: " << i[2] << std::endl;
     }
-
-    std::cout << "deepest dal in x = " << deepest_dall_x[0] << " begin: " << deepest_dall_x[1] << " end: " << deepest_dall_x[2] << std::endl;
+    /*
+    std::cout << "histo_x: \n";
+    for (auto i : histo_x){
+        std::cout << i << std::endl;
+    }
+    */
+    std::cout << "smallest dal in x = " << smallest_dall_x[0] << " begin: " << smallest_dall_x[1] << " end: " << smallest_dall_x[2] << std::endl;
     
 	return true;
 }
