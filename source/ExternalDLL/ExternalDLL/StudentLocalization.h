@@ -18,6 +18,7 @@ public:
 	std::vector<unsigned int> getEyeCandy(const std::vector<unsigned int>& histo, const int offset, bool deep) const;
     std::vector<unsigned int> histogram_x(const IntensityImage &image) const;
     std::vector<unsigned int> StudentLocalization::histogram_y(const IntensityImage &image) const;
+    void StudentLocalization::dilation(const IntensityImage &old_image, IntensityImage &new_image) const;
 private:
     Point2D<double>* top_left = new Point2D<double>;
     Point2D<double>* bottom_right = new Point2D<double>;

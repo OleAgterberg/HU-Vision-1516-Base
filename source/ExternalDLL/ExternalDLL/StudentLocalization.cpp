@@ -135,6 +135,22 @@ std::vector<unsigned int> remove_points_between(std::vector<unsigned int> list, 
     return new_list;
 }
 
+void StudentLocalization::dilation(const IntensityImage &old_image, IntensityImage &new_image) const {
+    for (int y = 1; y < old_image.getWidth(); y++){
+        for (int x = 1; x < old_image.getHeight(); x++){
+            int mask[3][3] = {  { 0,                          old_image.getPixel(x, y-1), 0                          },
+                                { old_image.getPixel(x-1, y), old_image.getPixel(x, y),   old_image.getPixel(x+1, y) },
+                                { 0,                          old_image.getPixel(x, y+1), 0                          }};
+            if (mask[0][1] == 255 || mask[1][0] == 225 || mask[1][1] == 255 || 
+                mask[1][2] == 255 || mask[2][1] == 255){
+                new_image.setPixel(x, y, 255);
+            }
+            else {
+                new_image.setPixel(x, y, 0);
+            }
+        }
+    }
+}
 
 bool StudentLocalization::stepFindExactEyes(const IntensityImage &image, FeatureMap &features) const {
 	Feature head_top = features.getFeature(Feature::FEATURE_HEAD_TOP);
