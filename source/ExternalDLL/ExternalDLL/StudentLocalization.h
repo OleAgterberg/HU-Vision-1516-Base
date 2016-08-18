@@ -10,18 +10,17 @@
 class StudentLocalization :
 	public Localization {
 public:
-
 	bool stepFindHead(const IntensityImage &image, FeatureMap &features) const;
 	bool stepFindNoseMouthAndChin(const IntensityImage &image, FeatureMap &features) const;
 	bool stepFindChinContours(const IntensityImage &image, FeatureMap &features) const;
 	bool stepFindNoseEndsAndEyes(const IntensityImage &image, FeatureMap &features) const;
 	bool stepFindExactEyes(const IntensityImage &image, FeatureMap &features) const;
 	std::vector<unsigned int> getEyeCandy(const std::vector<unsigned int>& histo, const int offset, bool deep) const;
-    std::vector<unsigned int> histogram_x(const IntensityImage &image);
-    std::vector<unsigned int> histogram_y(const IntensityImage &image);
+    std::vector<unsigned int> histogram_x(const IntensityImage &image) const;
+    std::vector<unsigned int> StudentLocalization::histogram_y(const IntensityImage &image) const;
 private:
-    Point2D<double>* top_left = nullptr;
-    Point2D<double>* bottom_right = nullptr;
+    Point2D<double>* top_left = new Point2D<double>;
+    Point2D<double>* bottom_right = new Point2D<double>;
 
 };
 

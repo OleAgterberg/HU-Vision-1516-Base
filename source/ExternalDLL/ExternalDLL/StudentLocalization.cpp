@@ -60,35 +60,61 @@ std::vector<unsigned int> StudentLocalization::getEyeCandy(const std::vector<uns
 	return x_rises;
 }
 
-// points: (x,y) top_left (x,y) bottom_right
-std::vector<unsigned int> StudentLocalization::histogram_x(const IntensityImage &image, int points[4]){
-    std::vector<unsigned int> histo;
-
-    histo.resize(points[0] - points[2], 0);
-    for (int x = points[0]; x < points[2]; x++)
-    {
-        for (int y = points[1]; y < points[3]; y++)	{
-            Intensity newIntensity = image.getPixel(x, y);
-            if (newIntensity == 255)
-                histo[x - points[1]]++;
+std::vector<int> get_deepest_dal(   std::vector<unsigned int> dal_points, 
+                                    std::vector<unsigned int> top_points, 
+                                    std::vector<unsigned int> histo, 
+                                    int offset                              ){
+    std::vector<int> deepest_dall = { 0, 0, 0 }; // 0: deep   1: y-begin    2: y-end
+    //deepest_dall.resize(3, 0);   // 0: deep   1: y-begin    2: y-end
+    for (int dal : dal_points){
+        int high_top = -1, low_top = -1;
+        for (int i = 1; i < top_points.size(); i++){
+            if (dal < top_points[i]){
+                high_top = top_points[i];
+                low_top = top_points[i - 1];
+                break;
+            }
+        }
+        if (high_top != -1){
+            //std::cout << "low_top = " << low_top + offset << "  high_top = " << high_top + offset << std::endl;
+            int deep = histo[low_top] + histo[high_top] - (2 * histo[dal]);
+            if (deep > deepest_dall[0]){
+                deepest_dall[0] = deep;
+                deepest_dall[1] = low_top + offset;
+                deepest_dall[2] = high_top + offset;
+            }
         }
     }
-    return histo;
+    return deepest_dall;
 }
 
 // points: (x,y) top_left (x,y) bottom_right
-std::vector<unsigned int> StudentLocalization::histogram_y(const IntensityImage &image){
-    std::vector<unsigned int> histo;
-    
-   /* histo.resize(points[1] - points[3], 0);
-    for (int x = points[0]; x < points[2]; x++)
+std::vector<unsigned int> StudentLocalization::histogram_x(const IntensityImage &image) const{
+    std::vector<unsigned int> histo_x;
+    histo_x.resize(bottom_right->x - top_left->x, 0);
+    for (int x = top_left->x; x < bottom_right->x; x++)
     {
-        for (int y = points[1]; y < points[3]; y++)	{
+        for (int y = top_left->y; y < bottom_right->y; y++)	{
             Intensity newIntensity = image.getPixel(x, y);
             if (newIntensity == 255)
-                histo[x - points[1]]++;
+                histo_x[x - top_left->x]++;
         }
-    }*/
+    }
+    return histo_x;
+}
+
+std::vector<unsigned int> StudentLocalization::histogram_y(const IntensityImage &image) const{
+    std::vector<unsigned int> histo;
+    histo.resize(bottom_right->y - top_left->y, 0);
+
+    for (int y = top_left->y; y < bottom_right->y; y++)
+    {
+        for (int x = top_left->x; x < bottom_right->x; x++)	{
+            Intensity newIntensity = image.getPixel(x, y);
+            if (newIntensity == 255)
+                histo[y - top_left->y]++;
+        }
+    }
     return histo;
 }
 
@@ -110,25 +136,26 @@ bool StudentLocalization::stepFindExactEyes(const IntensityImage &image, Feature
 	top_left->y = head_top_points[0].y;
 	bottom_right->x = head_right_points[0].x;
 	bottom_right->y = nose_bottom_right_points[0].y;
-	//int height = nose_bottom_points[0].getY() - head_top_points[0].getY();
-	//std::cout << "height between head top and nose bottom is: " << height << std::endl;
+    
+
 	
 	int width = head_right_points[0].getX() - head_left_points[0].getX();
 
 	std::cout << "width between left and right side of head is: " << width << std::endl;
-	std::vector<unsigned int> histo_y;
-	std::vector<unsigned int> histo_x;
-	histo_y.resize(bottom_right.y - top_left.y, 0);
-	histo_x.resize(bottom_right.x - top_left.x, 0);
-	
-    //histogram(image, histo_y, top_left);
 
-    int offset = top_left.y;
+    // make histogram on y-as
+    std::vector<unsigned int> histo_y;
+    histo_y.resize(bottom_right->y - top_left->y, 0);
+    histo_y = histogram_y(image);
+
+    int offset = top_left->y;
     std::vector<unsigned int> eyeCandyResults_dall = getEyeCandy(histo_y, offset, true);
     std::vector<unsigned int> eyeCandyResults_top = getEyeCandy(histo_y, offset, false);
 
-    int deepest_dall_y[3] = { 0, 0, 0 }; // 0: deep   1: y-begin    2: y-end
-    for (int dal : eyeCandyResults_dall){
+    std::vector<int> deepest_dall_y = { 0, 0, 0 }; // 0: deep   1: y-begin    2: y-end
+    deepest_dall_y = get_deepest_dal(eyeCandyResults_dall, eyeCandyResults_top, histo_y, offset);
+
+/*    for (int dal : eyeCandyResults_dall){
         int high_top = -1, low_top = -1;
         for (int i = 1; i < eyeCandyResults_top.size(); i++){
             if (dal < eyeCandyResults_top[i]){
@@ -146,29 +173,31 @@ bool StudentLocalization::stepFindExactEyes(const IntensityImage &image, Feature
                 deepest_dall_y[2] = high_top + offset;
             }
         }
-    }
-    std::cout << "deepest dal in y = " << deepest_dall_y[0] << " begin: " << deepest_dall_y[1] << " end: " << deepest_dall_y[2] << std::endl;
-	// Start of histo_x ********
-	for (int i = top_left.x; i < bottom_right.x; i++)
-	{
-		for (int j = deepest_dall_y[1]; j < deepest_dall_y[2]; j++)
-		{
-			Intensity newIntensity = image.getPixel(i, j);
-			if (newIntensity == 255)
-				histo_x[i - top_left.x]++;
+    } */
 
-		}
-	}
+    std::cout << "deepest dal in y = " << deepest_dall_y[0] << " begin: " << deepest_dall_y[1] << " end: " << deepest_dall_y[2] << std::endl;
+	
+    // use info of histo_y to scale the rect around the eyes
+    top_left->y = deepest_dall_y[1];
+    bottom_right->y = deepest_dall_y[2];
+
+    // Start of histo_x
+    std::vector<unsigned int> histo_x;
+    histo_x.resize(bottom_right->x - top_left->x, 0);
+    histo_x = histogram_x(image);
+/*
     for (auto a : histo_x){
         std::cout << a << std::endl;
     }
-    offset = top_left.x;
+*/
+    offset = top_left->x;
     std::cout << offset << " = offset" << std::endl;
     eyeCandyResults_dall = getEyeCandy(histo_x, offset, true);
     eyeCandyResults_top = getEyeCandy(histo_x, offset, false);
     
-    int deepest_dall_x[3] = { 0, 0, 0 }; // 0: deep   1: x-begin    2: x-end
-
+    std::vector<int> deepest_dall_x = { 0, 0, 0 }; // 0: deep   1: x-begin    2: x-end
+    deepest_dall_x = get_deepest_dal(eyeCandyResults_dall, eyeCandyResults_top, histo_x, offset);
+    /*
     for (int dal : eyeCandyResults_dall){
         int high_top = -1, low_top = -1;
         for (int i = 1; i < eyeCandyResults_top.size(); i++){
@@ -187,7 +216,7 @@ bool StudentLocalization::stepFindExactEyes(const IntensityImage &image, Feature
                 deepest_dall_x[2] = high_top + offset;
             }
         }
-    }
+    } */
 
     std::cout << "deepest dal in x = " << deepest_dall_x[0] << " begin: " << deepest_dall_x[1] << " end: " << deepest_dall_x[2] << std::endl;
     
